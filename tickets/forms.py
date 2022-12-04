@@ -3,7 +3,7 @@ from django import forms
 from tempus_dominus.widgets import DatePicker
 from .travel_class import type_class_travel
 from .validations import input_contains_numbers, origin_and_destination_is_equals, \
-        date_departure_great_more_date_back, date_departure_minor_date_today
+        date_departure_great_more_date_back,    date_departure_minor_date_today
 
 
 class TicketForm(forms.Form):
