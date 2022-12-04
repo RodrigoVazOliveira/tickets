@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% load widget_tweaks %}
 <section class="col-12">
     <form class="form-group" action="{% url 'my_query' %}"  method="post">
         {% csrf_token %}
         {% for field in form.visible_fields %}
         <div class="form-group">
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
+            {{ field|add_class:'form-control' }}
         </div>
         {% endfor %}
         <div class="d-grid gap-2">
