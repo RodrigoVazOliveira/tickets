@@ -2,7 +2,7 @@ from datetime import date
 from django import forms
 from tempus_dominus.widgets import DatePicker
 from .travel_class import type_class_travel
-
+from .validations import input_contains_numbers, origin_and_destination_is_equals
 
 class TicketForm(forms.Form):
     origin = forms.CharField(label='Origem: ', max_length=100)
@@ -19,14 +19,22 @@ class TicketForm(forms.Form):
     )
     email = forms.EmailField(label='E-mail: ')
 
-    def clean_origin(self):
-        origin = self.cleaned_data['origin']
-        if any(char.isdigit() for char in origin):
-            raise forms.ValidationError('Origem inválida. Não inclua digitos!')
-        return origin
 
-    def clean_destination(self):
-        destination = self.cleaned_data['destination']
-        if any(char.isdigit() for char in destination):
-            raise forms.ValidationError('Destino inválido. Nõa inclua digitos')
-        return destination
+    def clean(self):
+        origin = self.cleaned_data.get('origin')
+        destination = self.cleaned_data.get('destination')
+        list_errors = {}
+
+        input_contains_numbers(origin, 'origin', list_errors)
+        input_contains_numbers(destination, 'destination', list_errors)
+        origin_and_destination_is_equals(origin, destination, list_errors)
+
+        self.is_exists_errors(list_errors)
+
+        return self.cleaned_data
+
+    def is_exists_errors(self, list_errors):
+        if list_errors is not None:
+            for error in list_errors:
+                message = list_errors[error]
+                self.add_error(error, message)
