@@ -14,3 +14,9 @@ def date_departure_great_more_date_back(date_departure, date_back, list_errors):
     """ Verificar se data de ida é maior que a data de volta """
     if date_departure > date_back:
         list_errors['date_departure'] = 'Data de ida não pode ser maior que a data de volta!'
+
+
+def date_departure_minor_date_today(date_departure, date_search, list_errors):
+    """ Verificar se data de ida é menor que a data da pesquisa (hoje) """
+    if date_departure < date_search:
+        list_errors['date_departure'] = 'Data de ida não pode ser menor que a data de pesquisa!'
