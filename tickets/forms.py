@@ -18,3 +18,10 @@ class TicketForm(forms.Form):
         widget=forms.Textarea()
     )
     email = forms.EmailField(label='E-mail: ')
+
+    def clean_origin(self):
+        origin = self.cleaned_data['origin']
+        if any(char.isdigit() for char in origin):
+            raise forms.ValidationError('Origem inválida. Não inclua digitos!')
+
+        return origin
