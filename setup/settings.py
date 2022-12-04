@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tickets',
-    'tempus_dominus'
+    'tempus_dominus',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
