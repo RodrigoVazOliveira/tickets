@@ -9,6 +9,11 @@
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field|add_class:'form-control' }}
         </div>
+            {% for error in field.errors %}
+                <section class="alert alert-danger mt-2" role="alert">
+                    {{ error }}
+                </section>
+            {% endfor %}
         {% endfor %}
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-success">Ok</button>

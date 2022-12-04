@@ -23,5 +23,10 @@ class TicketForm(forms.Form):
         origin = self.cleaned_data['origin']
         if any(char.isdigit() for char in origin):
             raise forms.ValidationError('Origem inválida. Não inclua digitos!')
-
         return origin
+
+    def clean_destination(self):
+        destination = self.cleaned_data['destination']
+        if any(char.isdigit() for char in destination):
+            raise forms.ValidationError('Destino inválido. Nõa inclua digitos')
+        return destination
