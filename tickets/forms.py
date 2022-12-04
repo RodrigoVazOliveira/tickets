@@ -2,7 +2,8 @@ from datetime import date
 from django import forms
 from tempus_dominus.widgets import DatePicker
 from .travel_class import type_class_travel
-from .validations import input_contains_numbers, origin_and_destination_is_equals
+from .validations import input_contains_numbers, origin_and_destination_is_equals, date_departure_great_more_date_back
+
 
 class TicketForm(forms.Form):
     origin = forms.CharField(label='Origem: ', max_length=100)
@@ -19,16 +20,17 @@ class TicketForm(forms.Form):
     )
     email = forms.EmailField(label='E-mail: ')
 
-
     def clean(self):
+        list_errors = {}
         origin = self.cleaned_data.get('origin')
         destination = self.cleaned_data.get('destination')
-        list_errors = {}
+        date_departure = self.cleaned_data.get('date_departure')
+        date_back = self.cleaned_data.get('date_back')
 
         input_contains_numbers(origin, 'origin', list_errors)
         input_contains_numbers(destination, 'destination', list_errors)
         origin_and_destination_is_equals(origin, destination, list_errors)
-
+        date_departure_great_more_date_back(date_departure, date_back, list_errors)
         self.is_exists_errors(list_errors)
 
         return self.cleaned_data
